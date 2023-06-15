@@ -1,0 +1,1 @@
+A distributed stock exchange application
