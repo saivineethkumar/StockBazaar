@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  catalog:
+    build:
+      context: .
+      dockerfile: catalog.Dockerfile
+    ports:
+      - "26119:26119"
+    volumes:
+      - ./src/backend/catalog/data:/src/backend/catalog/data
+  
+  order:
+    build:
+      context: .
+      dockerfile: order.Dockerfile
+    ports:
+      - "26117:26117"
+    depends_on:
+      - catalog
+    volumes:
+      - ./src/backend/order/data:/src/backend/order/data
+  
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "26111:26111"
+    depends_on:
+      - order
+      - catalog
+
+# command to start and stop the docker compose
+# docker-compose up --build
+# docker-compose down
+  
+  

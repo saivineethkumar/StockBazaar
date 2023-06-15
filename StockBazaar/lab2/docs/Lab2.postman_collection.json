@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "130fbf0f-0ea2-48ca-9a00-db501bdb9f46",
+		"name": "Lab2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SayHello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "StocksLookup",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"stock\",\n    \"quantity\":10,\n    \"type\":\"BUY\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:26111/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "26111",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

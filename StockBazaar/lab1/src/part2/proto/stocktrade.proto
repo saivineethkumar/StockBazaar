@@ -1,0 +1,60 @@
+// proto file defining all the rpc methods, parameters and return values.
+
+// command to generate the python specific stub files:
+// python -m grpc_tools.protoc --proto_path=. ./unary.proto --python_out=. --grpc_python_out=.
+
+syntax = "proto3";
+
+package stocktrade;
+
+service StockTrade {
+    rpc Greeter(HelloRequest) returns (HelloResponse){}
+
+    rpc Lookup(StockName) returns (StockInfo) {}
+
+    rpc Trade(TradeInput) returns (TradeStatus) {}
+
+    rpc Update(UpdateInput) returns (UpdateStatus) {}
+
+}
+
+enum TRADE_TYPE{
+    BUY = 0;
+    SELL = 1;
+}
+
+message HelloRequest{
+    string msg = 1;
+}
+
+message HelloResponse{
+    string msg = 1;
+}
+
+message StockName {
+    string name = 1;
+}
+
+message StockInfo {
+    double price = 1;
+    int64 volume = 2;
+}
+
+message TradeInput {   
+    string name = 1;
+    int64 quantity = 2;
+    TRADE_TYPE type = 3;
+}
+
+message TradeStatus {
+    sint32 trade_status = 1;
+}
+
+message UpdateInput {
+    string name = 1;
+    double price = 2;
+}
+
+message UpdateStatus {
+    sint32 update_status = 1;
+}

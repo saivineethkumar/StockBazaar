@@ -1,0 +1,11 @@
+stockname,price,currvol
+stock1,25.78,100
+stock2,11.8,100
+stock3,9.08,100
+stock4,20.0,100
+stock5,1,100
+stock6,7.5,100
+stock7,32,100
+stock8,9.3,100
+stock9,3.5,100
+stock10,10,100

@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+service CatalogService{
+    rpc Lookup(LookupRequest) returns (LookupResponse) {}
+    rpc Update(UpdateRequest) returns (UpdateResponse) {}  
+}
+
+service OrderService{
+    rpc Trade(TradeRequest) returns (TradeResponse) {}
+    rpc OrderLookup(OrderLookupRequest) returns (OrderLookupResponse) {}
+    rpc StreamDBUpdates(Empty) returns (stream CacheInvalidateRequest) {}
+    rpc Save(Empty) returns (Empty) {}
+    rpc IsAlive(Empty) returns (AliveResponse) {}
+    rpc SyncOrderRequest(OrderDBItem) returns (Empty) {}
+    rpc SyncOrderDB(SyncRequest) returns (stream OrderDBItem) {}
+    rpc SetLeader(SetLeaderRequest) returns (Empty) {}
+    rpc GetLeader(Empty) returns (GetLeaderResponse) {} 
+}
+
+message LookupRequest{
+    string stockname = 1;
+}
+
+message LookupResponse{
+    string stockname = 1;
+    double price = 2;
+    int64 volume = 3;
+}
+
+// using different messages for trade and update services allowing services to evolve independently
+message UpdateRequest{
+    string stockname = 1;
+    TradeType trade_type = 2;
+    int64 quantity = 3;
+}
+
+message UpdateResponse{
+    string stockname = 1;
+    sint32 status = 2 ;
+}
+
+message TradeRequest{
+    string stockname = 1;
+    TradeType trade_type = 2;
+    int64 quantity = 3;
+}
+
+message TradeResponse{
+    string stockname = 1;
+    sint32 status = 2;
+    int64 transaction_number = 3;
+}
+
+message OrderLookupRequest{
+    int64 order_id = 1;
+}
+
+message OrderLookupResponse{
+    int64 order_id = 1;
+    sint32 status = 2;
+    string stockname = 3;
+    TradeType trade_type = 4;
+    int64 quantity = 5;
+}
+
+message CacheInvalidateRequest{
+    string stockname = 1;
+}
+
+enum TradeType{
+    BUY = 0;
+    SELL = 1;
+}
+
+message Empty{
+
+}
+
+message AliveResponse{
+    bool is_alive = 1;
+}
+
+message OrderDBItem{
+    string stockname = 1;
+    TradeType trade_type = 2;
+    int64 quantity = 3;
+    int64 transaction_number = 4;
+}
+
+message SyncRequest{
+    int64 max_transaction_number = 1;
+}
+
+message SetLeaderRequest{
+    int64 leader_id = 1;
+}
+
+message GetLeaderResponse{
+    int64 leader_id = 1;
+}

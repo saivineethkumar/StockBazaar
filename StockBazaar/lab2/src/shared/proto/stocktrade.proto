@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+service CatalogService{
+    rpc Lookup(LookupRequest) returns (LookupResponse) {}
+    rpc Update(UpdateRequest) returns (UpdateResponse) {}  
+}
+
+service OrderService{
+    rpc Trade(TradeRequest) returns (TradeResponse) {}
+    rpc Save(Empty) returns (Empty) {}
+}
+
+message LookupRequest{
+    string stockname = 1;
+}
+
+message LookupResponse{
+    string stockname = 1;
+    double price = 2;
+    int64 volume = 3;
+}
+
+// using different messages for trade and update services allowing services to evolve independently
+message UpdateRequest{
+    string stockname = 1;
+    TradeType trade_type = 2;
+    int64 quantity = 3;
+}
+
+message UpdateResponse{
+    string stockname = 1;
+    sint32 status = 2 ;
+}
+
+message TradeRequest{
+    string stockname = 1;
+    TradeType trade_type = 2;
+    int64 quantity = 3;
+}
+
+message TradeResponse{
+    string stockname = 1;
+    sint32 status = 2;
+    int64 transaction_number = 3;
+}
+
+enum TradeType{
+    BUY = 0;
+    SELL = 1;
+}
+
+message Empty{
+
+}
